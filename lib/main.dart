@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:segundaavaliacaovictor/treinos.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Iron Mentor',
-      home: const LoginPage(),
+      home:  LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+   LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -36,12 +36,12 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.blueGrey[900],
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding:  EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // titulo do app
-              const Text(
+               Text(
                 'Iron Mentor',
                 style: TextStyle(
                   color: Colors.orange,
@@ -49,21 +49,21 @@ class _LoginPageState extends State<LoginPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 20),
+               SizedBox(height: 20),
 
               // campo de email
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  labelStyle: const TextStyle(color: Colors.orange),
-                  focusedBorder: const OutlineInputBorder(
+                  labelStyle:  TextStyle(color: Colors.orange),
+                  focusedBorder:  OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.orange, width: 2),
                   ),
-                  border: const OutlineInputBorder(),
+                  border:  OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 20),
+               SizedBox(height: 20),
 
               // campo de senha
               TextField(
@@ -71,32 +71,32 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Senha',
-                  labelStyle: const TextStyle(color: Colors.orange),
-                  focusedBorder: const OutlineInputBorder(
+                  labelStyle:  TextStyle(color: Colors.orange),
+                  focusedBorder:  OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.orange, width: 2),
                   ),
-                  border: const OutlineInputBorder(),
+                  border:  OutlineInputBorder(),
                 ),
               ),
-              const SizedBox(height: 20),
+               SizedBox(height: 20),
 
               // para tipo de usuário
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding:  EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2A3F5F),
+                  color:  Color(0xFF2A3F5F),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: DropdownButton<String>(
                   value: _userType,
                   isExpanded: true,
-                  underline: const SizedBox(),
-                  style: const TextStyle(
+                  underline:  SizedBox(),
+                  style:  TextStyle(
                     color: Colors.white,
                     fontSize: 14,
                   ),
-                  dropdownColor: const Color(0xFF2A3F5F),
-                  items: const [
+                  dropdownColor:  Color(0xFF2A3F5F),
+                  items:  [
                     DropdownMenuItem(value: 'Professor', child: Text('Professor')),
                     DropdownMenuItem(value: 'Aluno', child: Text('Aluno')),
                   ],
@@ -107,13 +107,13 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
               ),
-              const SizedBox(height: 40),
+               SizedBox(height: 40),
 
               // botao de login
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
+                  gradient:  LinearGradient(
                     colors: [Color(0xFFFF6B35), Color(0xFFFF4500)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       );
                     },
-                    child: const Padding(
+                    child:  Padding(
                       padding: EdgeInsets.symmetric(vertical: 14),
                       child: Text(
                         'Entrar',
@@ -153,10 +153,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
+
 }
