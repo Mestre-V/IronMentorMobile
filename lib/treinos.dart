@@ -26,7 +26,7 @@ class _TreinosPageState extends State<TreinosPage> {
     'Quarta': [
       'Rosca Inversa, 3 séries de 12 repetições',
       'Polia Alta, 3 séries de 12 repetições',
-      'Crucifixo, 3 séries de 15 repetições',
+      'Crucifixo, 3 séries de 14 repetições',
     ],
     'Quinta': [
       'Agachamento Livre, 4 séries de 6 repetições',
@@ -62,34 +62,35 @@ class _TreinosPageState extends State<TreinosPage> {
           // grid dos dias da semana 2 linhas de 3 colunas
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-            child: GridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 3,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 8,
-              childAspectRatio: 2.8,
-              children: List.generate(
-                dias.length,
-                (index) => GestureDetector(
-                  onTap: () => setState(() => diaAtivo = index),
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: diaAtivo == index ? const Color(0xFFFF6B35) : const Color(0xFF2A3F5F),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      dias[index],
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: diaAtivo == index ? Colors.white : Colors.grey[400], fontSize: 14, fontWeight: FontWeight.w600),
-                    ),
-                  ),
+            child: Column(
+              children: [
+                // primira linha
+                Row(
+                  children: [
+                    Expanded(child: oBotao(0)),
+                    const SizedBox(width: 5), // Espaçamento entre os botões
+                    Expanded(child: oBotao(1)),
+                    const SizedBox(width: 5),
+                    Expanded(child: oBotao(2)),
+                  ],
                 ),
-              ),
+                
+                const SizedBox(height: 8), // Espaçamento entre as linhas (mainAxisSpacing)
+
+                // segunda linha
+                Row(
+                  children: [
+                    Expanded(child: oBotao(3)),
+                    const SizedBox(width: 5),
+                    Expanded(child: oBotao(4)),
+                    const SizedBox(width: 5),
+                    Expanded(child: oBotao(5)),
+                  ],
+                ),
+              ],
             ),
           ),
+          
           // lista de exercícios do dia que o cara seleciona
           Expanded(
             child: ListView.builder(
@@ -113,6 +114,29 @@ class _TreinosPageState extends State<TreinosPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+ // função obotão
+  Widget oBotao(int index) {
+    return GestureDetector(
+      onTap: () => setState(() => diaAtivo = index),
+      child: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: diaAtivo == index ? const Color(0xFFFF6B35) : const Color(0xFF2A3F5F),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          dias[index],
+          style: TextStyle(
+            color: diaAtivo == index ? Colors.white : Colors.grey[400],
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
     );
   }
