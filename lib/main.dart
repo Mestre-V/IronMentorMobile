@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:segundaavaliacaovictor/treinos.dart';
+import 'package:segundaavaliacaovictor/professor.dart';
 
 void main() {
   runApp( MyApp());
@@ -40,7 +41,6 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // titulo do app
                Text(
                 'Iron Mentor',
                 style: TextStyle(
@@ -51,8 +51,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
                SizedBox(height: 20),
 
-              // campo de email
               TextField(
+              
                 controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
@@ -65,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
                SizedBox(height: 20),
 
-              // campo de senha
               TextField(
                 controller: _passwordController,
                 obscureText: true,
@@ -124,13 +123,12 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TreinosPage(userType: _userType),
-                        ),
-                      );
-                    },
+                        if (_userType == 'Professor') {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfessorPage()));
+                        } else {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => TreinosPage(userType: _userType)));
+                        }
+                      },
                     child:  Padding(
                       padding: EdgeInsets.symmetric(vertical: 14),
                       child: Text(
