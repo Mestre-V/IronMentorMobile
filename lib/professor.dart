@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:segundaavaliacaovictor/alunosdados.dart';
 
 class AlunoModel {
   final String nome;
@@ -207,7 +208,11 @@ class _AlunoCardState extends State<AlunoCard> {
                       style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  // botão de mais opções, abre a tela de dados detalhados do aluno
+                  IconButton(
+                    icon: const Icon(Icons.more_vert, color: Colors.grey),
+                    onPressed: () => _abrirDadosDoAluno(context, aluno),
+                  ),
                   AnimatedRotation(
                     turns: expandido ? 0.5 : 0,
                     duration: const Duration(milliseconds: 300),
@@ -241,6 +246,27 @@ class _AlunoCardState extends State<AlunoCard> {
                 : const SizedBox(width: double.infinity, height: 0),
           ),
         ],
+      ),
+    );
+  }
+
+  // navega pra alunosdados com uma transição de fade e zoom leve
+  void _abrirDadosDoAluno(BuildContext context, AlunoModel aluno) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 350),
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            AlunosDadosPage(aluno: aluno),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final escala = Tween<double>(begin: 0.92, end: 1).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+          );
+          return FadeTransition(
+            opacity: animation,
+            child: ScaleTransition(scale: escala, child: child),
+          );
+        },
       ),
     );
   }
