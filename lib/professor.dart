@@ -5,23 +5,25 @@ class AlunoModel {
   final String nome;
   final double peso;
   final double altura;
-  final int treinosCompletos;
-  final int treinosTotal;
+  final double gorduraKg;
+  final double massaMuscularKg;
 
   AlunoModel({
     required this.nome,
     required this.peso,
     required this.altura,
-    required this.treinosCompletos,
-    required this.treinosTotal,
+    required this.gorduraKg,
+    required this.massaMuscularKg,
   });
 
   // processamento: calcula o IMC do aluno
   double get imc => peso / (altura * altura);
 
-  // processamento: progresso do aluno de 0.0 a 1.0
-  double get progresso =>
-      treinosTotal == 0 ? 0 : treinosCompletos / treinosTotal;
+  // processamento: percentual de gordura do aluno, baseado na gordura (kg) e na massa muscular (kg)
+  double get percentualGordura {
+    final total = gorduraKg + massaMuscularKg;
+    return total == 0 ? 0 : (gorduraKg / total) * 100;
+  }
 
   // processamento: classificação textual do IMC
   String get imcClassificacao {
@@ -42,11 +44,11 @@ class ProfessorPage extends StatefulWidget {
 class _ProfessorPageState extends State<ProfessorPage> {
   // lista de alunos
   final List<AlunoModel> alunos = [
-    AlunoModel(nome: 'Lucas Almeida', peso: 78, altura: 1.78, treinosCompletos: 18, treinosTotal: 24),
-    AlunoModel(nome: 'Marina Costa', peso: 62, altura: 1.65, treinosCompletos: 22, treinosTotal: 24),
-    AlunoModel(nome: 'Rafael Souza', peso: 91, altura: 1.82, treinosCompletos: 10, treinosTotal: 24),
-    AlunoModel(nome: 'Beatriz Lima', peso: 55, altura: 1.60, treinosCompletos: 24, treinosTotal: 24),
-    AlunoModel(nome: 'Gustavo Rocha', peso: 84, altura: 1.75, treinosCompletos: 14, treinosTotal: 24),
+    AlunoModel(nome: 'Lucas Almeida', peso: 78, altura: 1.78, gorduraKg: 14, massaMuscularKg: 38),
+    AlunoModel(nome: 'Marina Costa', peso: 62, altura: 1.65, gorduraKg: 16, massaMuscularKg: 24),
+    AlunoModel(nome: 'Rafael Souza', peso: 91, altura: 1.82, gorduraKg: 22, massaMuscularKg: 40),
+    AlunoModel(nome: 'Beatriz Lima', peso: 55, altura: 1.60, gorduraKg: 12, massaMuscularKg: 22),
+    AlunoModel(nome: 'Gustavo Rocha', peso: 84, altura: 1.75, gorduraKg: 18, massaMuscularKg: 36),
   ];
 
   // processamento: IMC médio dos alunos
@@ -56,10 +58,10 @@ class _ProfessorPageState extends State<ProfessorPage> {
     return soma / alunos.length;
   }
 
-  // processamento: progresso médio dos alunos
-  double get progressoMedioAlunos {
+  // processamento: percentual de gordura médio dos alunos
+  double get gorduraMediaAlunos {
     if (alunos.isEmpty) return 0;
-    final soma = alunos.fold<double>(0, (prev, a) => prev + a.progresso);
+    final soma = alunos.fold<double>(0, (prev, a) => prev + a.percentualGordura);
     return soma / alunos.length;
   }
 
@@ -99,8 +101,8 @@ class _ProfessorPageState extends State<ProfessorPage> {
                 const SizedBox(width: 10),
                 Expanded(
                   child: EstatisticaBox(
-                    titulo: 'Progresso médio dos alunos',
-                    valor: '${(progressoMedioAlunos * 100).toStringAsFixed(0)}%',
+                    titulo: 'Gordura média dos alunos',
+                    valor: '${gorduraMediaAlunos.toStringAsFixed(0)}%',
                   ),
                 ),
               ],
@@ -239,7 +241,9 @@ class _AlunoCardState extends State<AlunoCard> {
                         _linhaDetalhe('Peso', '${aluno.peso.toStringAsFixed(1)} kg'),
                         _linhaDetalhe('Altura', '${aluno.altura.toStringAsFixed(2)} m'),
                         _linhaDetalhe('IMC', '${aluno.imc.toStringAsFixed(1)} (${aluno.imcClassificacao})'),
-                        _linhaDetalhe('Treinos', '${aluno.treinosCompletos}/${aluno.treinosTotal}'),
+                        _linhaDetalhe('Gordura corporal', '${aluno.gorduraKg.toStringAsFixed(1)} kg'),
+                        _linhaDetalhe('Massa muscular', '${aluno.massaMuscularKg.toStringAsFixed(1)} kg'),
+                        _linhaDetalhe('% Gordura', '${aluno.percentualGordura.toStringAsFixed(1)}%'),
                       ],
                     ),
                   )

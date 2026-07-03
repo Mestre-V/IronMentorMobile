@@ -6,12 +6,6 @@ class AlunosDadosPage extends StatelessWidget {
 
   const AlunosDadosPage({super.key, required this.aluno});
 
-  // processamento: quantos treinos ainda faltam pro aluno
-  int get treinosRestantes => aluno.treinosTotal - aluno.treinosCompletos;
-
-  // processamento: percentual concluído formatado
-  String get percentualConcluido => '${(aluno.progresso * 100).toStringAsFixed(0)}%';
-
   @override
   Widget build(BuildContext context) {
     // lista de informações que vão virar os cards da tela
@@ -19,9 +13,9 @@ class AlunosDadosPage extends StatelessWidget {
       _ItemDetalhe('Peso', '${aluno.peso.toStringAsFixed(1)} kg'),
       _ItemDetalhe('Altura', '${aluno.altura.toStringAsFixed(2)} m'),
       _ItemDetalhe('IMC', '${aluno.imc.toStringAsFixed(1)} (${aluno.imcClassificacao})'),
-      _ItemDetalhe('Treinos concluídos', '${aluno.treinosCompletos}/${aluno.treinosTotal}'),
-      _ItemDetalhe('Treinos restantes', '$treinosRestantes'),
-      _ItemDetalhe('Progresso', percentualConcluido),
+      _ItemDetalhe('Gordura corporal', '${aluno.gorduraKg.toStringAsFixed(1)} kg'),
+      _ItemDetalhe('Massa muscular', '${aluno.massaMuscularKg.toStringAsFixed(1)} kg'),
+      _ItemDetalhe('% Gordura', '${aluno.percentualGordura.toStringAsFixed(1)}%'),
     ];
 
     return Scaffold(
@@ -82,7 +76,6 @@ class AlunosDadosPage extends StatelessWidget {
   }
 }
 
-// classe simples só pra guardar cada linha de informação
 class _ItemDetalhe {
   final String titulo;
   final String valor;

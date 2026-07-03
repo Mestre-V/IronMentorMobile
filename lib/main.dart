@@ -31,6 +31,26 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   String _userType = 'Professor';
 
+  // transição de fade e zoom leve pra trocar de página
+  void _navegarComFade(Widget pagina) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 350),
+        pageBuilder: (context, animation, secondaryAnimation) => pagina,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final escala = Tween<double>(begin: 0.92, end: 1).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+          );
+          return FadeTransition(
+            opacity: animation,
+            child: ScaleTransition(scale: escala, child: child),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,9 +144,9 @@ class _LoginPageState extends State<LoginPage> {
                   child: InkWell(
                     onTap: () {
                         if (_userType == 'Professor') {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfessorPage()));
+                          _navegarComFade(const ProfessorPage());
                         } else {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => TreinosPage(userType: _userType)));
+                          _navegarComFade(TreinosPage(userType: _userType));
                         }
                       },
                     child:  Padding(
